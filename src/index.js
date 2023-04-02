@@ -2,7 +2,14 @@ import Images from './modules/api';
 import { clearImages, renderImages } from './modules/render';
 import Notiflix from 'notiflix';
 import LoadMore from './modules/load-more';
+// Описаний в документації
+import SimpleLightbox from 'simplelightbox';
+// Додатковий імпорт стилів
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
+const lightbox = new SimpleLightbox('.gallery a', {
+  /* options */
+});
 const newImages = new Images();
 const loadMoreBtn = new LoadMore('.load-more');
 loadMoreBtn.hidden();
@@ -50,9 +57,18 @@ async function addImages() {
       loadMoreBtn.hidden();
       return;
     }
+
+    if (newImages.page_ === 1) {
+      Notiflix.Notify.info(`Hooray! We found ${list.totalHits} images.`, {
+        position: 'center-center',
+      });
+    }
+
     newImages.updateQuantityImages(list.hits.length);
 
     renderImages(list.hits);
+
+    lightbox.refresh();
 
     loadMoreBtn.show();
     if (list.totalHits === newImages.quantityImages) {

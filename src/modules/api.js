@@ -48,12 +48,22 @@ export default class Images {
     this.page += 1;
   }
 
+  get page_() {
+    return this.page;
+  }
+
+  set page_(newPage) {
+    this.page = newPage;
+  }
+
   updateQuantityImages(q) {
     this.quantityImages += q;
   }
 
   resetVar() {
     this.quantityImages = 0;
+
+    //this.page(0);
     this.page = 0;
   }
 
